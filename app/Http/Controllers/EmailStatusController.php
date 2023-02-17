@@ -32,6 +32,7 @@ class EmailStatusController extends Controller
             // write to a text file
             $file = fopen('webhook.txt', 'a');
             fwrite($file, json_encode($request->all()));
+            fwrite($file, "\n");
             fclose($file);
         }
 
