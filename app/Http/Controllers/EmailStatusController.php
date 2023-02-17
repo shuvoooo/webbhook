@@ -28,6 +28,11 @@ class EmailStatusController extends Controller
         } elseif ($request->has('message') && $request->has('user_agent')) {
             $status = "Message Click";
             $toEmail = $request->input('message.to');
+        } else {
+            // write to a text file
+            $file = fopen('webhook.txt', 'a');
+            fwrite($file, json_encode($request->all()));
+            fclose($file);
         }
 
         // check $status and $toEmail is not empty and $toEmail include friendspix
