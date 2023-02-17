@@ -19,15 +19,15 @@ class EmailStatusController extends Controller
         $status = null;
         $toEmail = null;
 
-        if ($request->has('status') && $request->has('message')) {
-            $status = $request->input('status');
-            $toEmail = $request->input('message.to');
-        } elseif ($request->has('original_message') && $request->has('bounce')) {
+        if ($request->has('payload.status') && $request->has('payload.message')) {
+            $status = $request->input('payload.status');
+            $toEmail = $request->input('payload.message.to');
+        } elseif ($request->has('payload.original_message') && $request->has('payload.bounce')) {
             $status = "Message Bounces";
-            $toEmail = $request->input('original_message.to');
-        } elseif ($request->has('message') && $request->has('user_agent')) {
+            $toEmail = $request->input('payload.original_message.to');
+        } elseif ($request->has('payload.message') && $request->has('payload.user_agent')) {
             $status = "Message Click";
-            $toEmail = $request->input('message.to');
+            $toEmail = $request->input('payload.message.to');
         } else {
             // write to a text file
             $file = fopen('webhook.txt', 'a');
